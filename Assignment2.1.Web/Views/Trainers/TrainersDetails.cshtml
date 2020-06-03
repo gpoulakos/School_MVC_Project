@@ -1,0 +1,70 @@
+﻿@model IEnumerable< Assignment2._1.Entities.Trainer>
+
+@{
+    ViewBag.Title = "TrainersDetails";
+}
+
+<h2>lkjhgf</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Subject</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var trainer in Model.Courses)
+            {
+                foreach (var course in Model.Courses)
+                {
+                    foreach (var photo in Model.Photos)
+                    {
+                        <td><img width="100" class="img-fluid" src="@photo.Url" alt="No picture" /></td>
+                    }
+                    <td>@Html.DisplayFor(x=>x.FirstName)</td>
+                    <td>@Html.DisplayFor(x=>x.LastName)</td>
+                    <td>@Html.DisplayFor(x=>x.Courses)</td>
+                }
+            }
+
+                </tr>
+        
+
+
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+        @*//@foreach(var photo in Model.Photos)
+        //{
+        //    < li > @course.Title </ li >
+        //    < li > @course.StartDate.ToString("yyyy/MM/dd") </ li >
+        //    < li > @course.Students.Count() Students </ li >
+        //}
+        //<ul>
+        //    <li>@Html.DisplayNameFor(x => Model.Subject) : @Html.DisplayFor(X => Model.Subject)</li>
+        //    @foreach (var course in Model.Courses)
+        //    {
+        //        <li>@course.Title</li>
+        //        <li>@course.StartDate.ToString("yyyy/MM/dd")</li>
+        //        <li>@course.Students.Count() Students</li>
+        //    }
+
+        //</ul>
+
+        //<hr />
+        //@Html.ActionLink("Back to Trainers", "TrainerTable", "Trainers");
+        <li>@Html.DisplayNameFor(x => Model.TuitionFees) : @Html.DisplayFor(X => Model.TuitionFees)</li>*@

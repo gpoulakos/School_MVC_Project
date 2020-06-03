@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<Assignment2._1.Entities.Assignment>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "AssignmentTable";
+}
+
+<h2>Assignments Table</h2>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, x => @Url.Action("CourseTable", "Course", new { page = x, sortOrder = ViewBag.CurrentSortOrder, searchtitle = ViewBag.CurrenTitle, searchdescription = ViewBag.CurrentDescription, searchminsubdatetime = ViewBag.CurrentMinSubDateTime, searchmaxsubdatetime = ViewBag.CurrentMaxSubDateTime, pSize = ViewBag.CurrentpSize }))
+
+
+@{
+    SelectListItem a1 = new SelectListItem() { Text = "1", Value = "5" };
+    SelectListItem a2 = new SelectListItem() { Text = "2", Value = "5" };
+    SelectListItem a3 = new SelectListItem() { Text = "3", Value = "5" };
+    SelectListItem a4 = new SelectListItem() { Text = "4", Value = "5" };
+    SelectListItem a5 = new SelectListItem() { Text = "5", Value = "5" };
+    List<SelectListItem> items = new List<SelectListItem>() { a1, a2, a3, a4, a5 };
+}
+
+@using (Html.BeginForm("AssignmentTable", "Assignment", FormMethod.Get, new { @class = "form-inline" }))
+{
+
+    @Html.TextBox("searchtitle", null, new { @class = "form-control", placeholder = "Search Title" })
+    @Html.TextBox("searchdescription", null, new { @class = "form-control", placeholder = "Search Description" })
+
+
+    @Html.TextBox("searchminsubdatetime", null, new { @class = "form-control", type = "date", placeholder = "Search Minimum Sub Date" })
+    @Html.TextBox("searchmaxsubdatetime", null, new { @class = "form-control", type = "date", placeholder = "Search Maximum Sub Date" })
+
+    string str = ViewBag.CurrentSortOrder;
+    @Html.TextBox("sortOrder", str, new { type = "hidden" })
+    @Html.DropDownList("pSize", items, new { @class = "form-control" })
+    <input type="submit" value="Search" class="btn btn-primary" />
+
+}
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>@Html.ActionLink("Title", "AssignmentTable", "Assignment", new { sortOrder = ViewBag.TitleSortParam, searchtitle = ViewBag.CurrenTitle, searchdescription = ViewBag.CurrentDescription, searchminsubdatetime = ViewBag.CurrentMinSubDateTime, searchmaxsubdatetime = ViewBag.CurrentMaxSubDateTime, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+            <th>@Html.ActionLink("Description", "AssignmentTable", "Assignment", new { sortOrder = ViewBag.DescriptionSortParam, searchtitle = ViewBag.CurrenTitle, searchdescription = ViewBag.CurrentDescription, searchminsubdatetime = ViewBag.CurrentMinSubDateTime, searchmaxsubdatetime = ViewBag.CurrentMaxSubDateTime, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+            <th>@Html.ActionLink("SubDateTime", "AssignmentTable", "Assignment", new { sortOrder = ViewBag.SubDateTimeSortParam, searchtitle = ViewBag.CurrenTitle, searchdescription = ViewBag.CurrentDescription, searchminsubdatetime = ViewBag.CurrentMinSubDateTime, searchmaxsubdatetime = ViewBag.CurrentMaxSubDateTime, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var assignment in Model)
+        {
+            <tr>
+
+                <td>@Html.ActionLink(assignment.Title, "AssignmentDetails", new { id = assignment.AssignmentId }, null)</td>
+                <td>@Html.DisplayFor(x => assignment.Description)</td>
+                <td>@Html.DisplayFor(x => assignment.SubDateTime)</td>
+                <td>
+                    <ul>
+                    </ul>
+                </td>
+            </tr>
+        }
+
+
+
+    </tbody>
+</table>
+
+

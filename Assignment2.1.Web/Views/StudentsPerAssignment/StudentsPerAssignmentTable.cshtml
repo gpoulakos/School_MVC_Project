@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Assignment2._1.Entities.StudentAssignment>
+
+@{
+    ViewBag.Title = "StudentsPerAssignmentTable";
+}
+
+<h2>Students Per Assignment</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Full Name</th>
+            <th>OralMark</th>
+            <th>TotalMark</th>
+            <th>CodeMark</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var item in Model)
+        {
+
+        <tr>
+            <td>@item.Assignment.Title</td>
+            <td>@item.Student.FirstName @item.Student.LastName </td>
+            <td>@item.OralMark</td>
+            <td>@item.TotalMark</td>
+            <td>@item.CodeMark</td>
+
+
+        </tr>
+        }
+
+    </tbody>
+</table>

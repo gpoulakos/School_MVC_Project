@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<Assignment2._1.Entities.Trainer>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "TrainerTable";
+}
+
+<h2>Trainers Table</h2>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, x => @Url.Action("directorTable", "director", new { page = x, sortOrder = ViewBag.CurrentSortOrder, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchsubject = ViewBag.CurrentSubject, pSize = ViewBag.CurrentpSize }))
+
+@using (Html.BeginForm("TrainerTable", "trainer", FormMethod.Get, new { @class = "form-inline" }))
+{
+
+    @Html.TextBox("searchfirstname", null, new { @class = "form-control", placeholder = "Search FirstName" })
+    @Html.TextBox("searchlastname", null, new { @class = "form-control", placeholder = "Search LastName" })
+    @Html.TextBox("searchsubject", null, new { @class = "form-control", placeholder = "Search Subject" })
+
+
+    string str = ViewBag.CurrentSortOrder;
+    @Html.TextBox("sortOrder", str, new { type = "hidden" })
+
+    <input type="submit" class="btn btn-primary" value="Search" />
+
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>@Html.ActionLink("First Name", "TrainerTable", "Trainers", new { sortOrder = ViewBag.FirstNameSortParam, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchsubject = ViewBag.CurrentSubject, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+            <th>@Html.ActionLink("Last Name", "TrainerTable", "Trainers", new { sortOrder = ViewBag.LastNameSortParam, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchsubject = ViewBag.CurrentSubject, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.LNView })</th>
+            <th>@Html.ActionLink("Subject", "TrainerTable", "Trainers", new { sortOrder = ViewBag.SubjectSortParam, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchsubject = ViewBag.CurrentSubject , pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.AGView })</th>
+            <th>Courses</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var trainer in Model)
+        {
+
+            <tr>
+                <td>
+
+                    @foreach (var photo in trainer.Photos)
+                    {
+                        <img width="100" class="img-fluid" src="@photo.Url" alt="No picture" />
+                    }
+                </td>
+                    <td>@Html.DisplayFor(x => trainer.FirstName)</td>
+                    <td>@Html.DisplayFor(x => trainer.LastName)</td>
+                    <td>@Html.DisplayFor(x => trainer.Subject)</td>
+                    <td>
+                        @foreach (var t in trainer.Courses)
+                        {
+                            <ul>
+                                <li>@t.Title</li>
+                            </ul>
+                        }
+                    </td>
+                   
+
+</tr>
+        }
+
+
+
+    </tbody>
+</table>
+
+

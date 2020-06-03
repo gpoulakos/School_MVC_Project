@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<Assignment2._1.Entities.Course>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "CourseTable";
+}
+
+<h2>Courses Table</h2>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, x => @Url.Action("CourseTable", "Course", new { page = x, sortOrder = ViewBag.CurrentSortOrder, searchtitle = ViewBag.CurrenTitle, searchstream = ViewBag.CurrentStream, searchtype = ViewBag.CurrentType, searchminstartdate = ViewBag.CurrentMinStartDate, searchmaxstartdate = ViewBag.CurrentMaxStartDate, searchminenddate = ViewBag.CurrentMinEndDate, searchmaxenddate = ViewBag.CurrentMaxEndDate, pSize = ViewBag.CurrentpSize }))
+
+
+@using (Html.BeginForm("CourseTable", "Course", FormMethod.Get, new { @class = "form-inline" }))
+{
+
+    @Html.TextBox("searchtitle", null, new { @class = "form-control", placeholder = "Search Title" })
+    @Html.TextBox("searchstream", null, new { @class = "form-control", placeholder = "Search Stream" })
+    @Html.TextBox("searchtype", null, new { @class = "form-control", placeholder = "Search Type" })
+
+
+    @Html.TextBox("searchminstartdate", null, new { @class = "form-control", type = "date", placeholder = "Search Minimum Start Date" })
+    @Html.TextBox("searchmaxstartdate", null, new { @class = "form-control", type = "date", placeholder = "Search Maximum Start Date" })
+
+    @Html.TextBox("searchminenddate", null, new { @class = "form-control", type = "date", placeholder = "Search Minimum End Date" })
+    @Html.TextBox("searchmaxenddate", null, new { @class = "form-control", type = "date", placeholder = "Search Maximum End Date" })
+
+
+    string str = ViewBag.CurrentSortOrder;
+    @Html.TextBox("sortOrder", str, new { type = "hidden" })
+    <input type="submit" value="Search" class="btn btn-primary" />
+
+}
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>@Html.ActionLink("Title", "CourseTable", "Course", new { sortOrder = ViewBag.TitleSortParam, searchtitle = ViewBag.CurrenTitle, searchstream = ViewBag.CurrentStream, searchtype = ViewBag.CurrentType, searchminstartdate = ViewBag.CurrentMinStartDate, searchmaxstartdate = ViewBag.CurrentMaxStartDate, searchminenddate = ViewBag.CurrentMinEndDate, searchmaxenddate = ViewBag.CurrentMaxEndDate, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+            <th>@Html.ActionLink("Stream", "CourseTable", "Course", new { sortOrder = ViewBag.StreamSortParam, searchtitle = ViewBag.CurrenTitle, searchstream = ViewBag.CurrentStream, searchtype = ViewBag.CurrentType, searchminstartdate = ViewBag.CurrentMinStartDate, searchmaxstartdate = ViewBag.CurrentMaxStartDate, searchminenddate = ViewBag.CurrentMinEndDate, searchmaxenddate = ViewBag.CurrentMaxEndDate, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+            <th>@Html.ActionLink("Type", "CourseTable", "Course", new { sortOrder = ViewBag.TypeSortParam, searchtitle = ViewBag.CurrenTitle, searchstream = ViewBag.CurrentStream, searchtype = ViewBag.CurrentType, searchminstartdate = ViewBag.CurrentMinStartDate, searchmaxstartdate = ViewBag.CurrentMaxStartDate, searchminenddate = ViewBag.CurrentMinEndDate, searchmaxenddate = ViewBag.CurrentMaxEndDate, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+            <th>@Html.ActionLink("StartDate", "CourseTable", "Course", new { sortOrder = ViewBag.StartDateSortParam, searchtitle = ViewBag.CurrenTitle, searchstream = ViewBag.CurrentStream, searchtype = ViewBag.CurrentType, searchminstartdate = ViewBag.CurrentMinStartDate, searchmaxstartdate = ViewBag.CurrentMaxStartDate, searchminenddate = ViewBag.CurrentMinEndDate, searchmaxenddate = ViewBag.CurrentMaxEndDate, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+            <th>@Html.ActionLink("EndDate", "CourseTable", "Course", new { sortOrder = ViewBag.EndDateSortParam, searchtitle = ViewBag.CurrenTitle, searchstream = ViewBag.CurrentStream, searchtype = ViewBag.CurrentType, searchminstartdate = ViewBag.CurrentMinStartDate, searchmaxstartdate = ViewBag.CurrentMaxStartDate, searchminenddate = ViewBag.CurrentMinEndDate, searchmaxenddate = ViewBag.CurrentMaxEndDate, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var course in Model)
+        {
+            <tr>
+
+                <td>@Html.ActionLink(course.Title, "CourseDetails", new { id = course.CourseId }, null)</td>
+                <td>@Html.DisplayFor(x => course.Stream)</td>
+                <td>@Html.DisplayFor(x => course.Type)</td>
+                <td>@Html.DisplayFor(x => course.StartDate)</td>
+                <td>@Html.DisplayFor(x => course.EndDate)</td>
+               
+            </tr>
+        }
+
+
+
+    </tbody>
+</table>
+
+

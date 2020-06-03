@@ -1,0 +1,16 @@
+﻿@model Assignment2._1.Entities.Student
+
+@{
+    ViewBag.Title = "SimpleDetails";
+}
+
+<h4>@Model.FirstName @Model.LastName</h4>
+<ul>
+    <li>@Html.DisplayNameFor(x => Model.DateOfBirth) : @Html.DisplayFor(X => Model.DateOfBirth)</li>
+    <li>@Html.DisplayNameFor(x => Model.TuitionFees) : @Html.DisplayFor(X => Model.TuitionFees)</li>
+    
+    
+</ul>
+
+<hr />
+@Html.ActionLink("Back to Students", "StudentsTable", "Students"); 

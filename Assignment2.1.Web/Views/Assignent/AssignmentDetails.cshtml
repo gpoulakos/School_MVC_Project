@@ -1,0 +1,31 @@
+﻿@model Assignment2._1.Entities.Assignment
+
+@{
+    ViewBag.Title = "AssignmentDetails";
+}
+
+<h2>Assignment Details</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>Enrolled Students</th>
+            <th>Oral Mark</th>
+            <th>Total Mark</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var assignment in Model.StudentAssignments)
+        {
+        <tr>
+
+            <td>@assignment.Student.FirstName @assignment.Student.LastName</td>
+            <td>@assignment.OralMark</td>
+            <td>@assignment.TotalMark</td>
+        </tr>
+        }
+    </tbody>
+</table>

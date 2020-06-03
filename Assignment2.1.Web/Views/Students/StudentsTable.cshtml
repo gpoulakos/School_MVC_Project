@@ -1,0 +1,88 @@
+﻿@model PagedList.IPagedList<Assignment2._1.Entities.Student>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "StudentsTable";
+}
+
+<h1>Students Table</h1>
+
+<p></p>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, x => @Url.Action("StudentsTable", "Students", new { page = x, sortOrder = ViewBag.CurrentSortOrder, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchminage = ViewBag.CurrentMinAge, searchmaxage = ViewBag.CurrentMaxAge, searchmindate = ViewBag.CurrentMinDate, searchmaxdate = ViewBag.CurrentMaxDate, pSize = ViewBag.CurrentpSize }))
+
+
+@{
+    SelectListItem a1 = new SelectListItem() { Text = "1", Value = "10" };
+    SelectListItem a2 = new SelectListItem() { Text = "2", Value = "15" };
+    SelectListItem a3 = new SelectListItem() { Text = "3", Value = "20" };
+    SelectListItem a4 = new SelectListItem() { Text = "4", Value = "25" };
+    SelectListItem a5 = new SelectListItem() { Text = "5", Value = "30" };
+    List<SelectListItem> items = new List<SelectListItem>() { a1, a2, a3, a4, a5 };
+}
+
+@using (Html.BeginForm("StudentsTable", "Students", FormMethod.Get, new { @class = "form-inline" }))
+{
+
+    @Html.TextBox("searchfirstname", null, new { @class = "form-control", placeholder = "Search First Name" })
+    @Html.TextBox("searchlastname", null, new { @class = "form-control", placeholder = "Search Last Name" })
+
+    @Html.TextBox("searchminage", null, new { @class = "form-control", type = "number", placeholder = "Search Min Age" })
+    @Html.TextBox("searchmaxage", null, new { @class = "form-control", type = "number", placeholder = "Search Max Age" })
+
+    @Html.TextBox("searchmindate", null, new { @class = "form-control", type = "date", placeholder = "Search Min Date" })
+    @Html.TextBox("searchmaxsate", null, new { @class = "form-control", type = "date", placeholder = "Search Max Date" })
+
+    string str = ViewBag.CurrentSortOrder;
+    @Html.TextBox("sortOrder", str, new { type = "hidden" })
+    @Html.DropDownList("pSize", items, new { @class = "form-control" })
+    <input type="submit" value="Search" class="btn btn-primary" />
+
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>@Html.ActionLink("First Name", "StudentsTable", "Students", new { sortOrder = ViewBag.FirstNameSortParam, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchminage = ViewBag.CurrentMinAge, searchmaxage = ViewBag.CurrentMaxAge, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.FNView })</th>
+            <th>@Html.ActionLink("Last Name", "StudentsTable", "Students", new { sortOrder = ViewBag.LastNameSortParam, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchminage = ViewBag.CurrentMinAge, searchmaxage = ViewBag.CurrentMaxAge, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.LNView })</th>
+            <th>@Html.ActionLink("Age", "StudentsTable", "Students", new { sortOrder = ViewBag.AgeSortParam, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchminage = ViewBag.CurrentMinAge, searchmaxage = ViewBag.CurrentMaxAge, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.AGView })</th>
+            <th>@Html.ActionLink("Date of Birth", "StudentsTable", "Students", new { sortOrder = ViewBag.AgeSortParam, searchfirstname = ViewBag.CurrentFirstName, searchlastname = ViewBag.CurrentLastName, searchminage = ViewBag.CurrentMinAge, searchmaxage = ViewBag.CurrentMaxAge, searchmindate = ViewBag.CurrentMinDate, searchmaxdate = ViewBag.CurrentMaxDate, pSize = ViewBag.CurrentpSize }, new { @class = ViewBag.AGView })</th>
+            <th>Tuition Fees</th>
+            <th>Courses / Assignments</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var student in Model)
+        {
+            foreach (var photo in student.Photos)
+            {
+        <tr>
+            <td>
+                <img width="100" class="img-fluid" src="@photo.Url" alt="No picture" />
+            </td>
+            <td>@Html.DisplayFor(x => student.FirstName)</td>
+            <td>@Html.DisplayFor(x => student.LastName)</td>
+            <td>@Html.DisplayFor(x => student.Age)</td>
+            <td>@Html.DisplayFor(x => student.DateOfBirth)</td>
+            <td>@Html.DisplayFor(x => student.TuitionFees)</td>
+            <td>
+            @foreach (var course in student.Courses)
+            {
+                @Html.DisplayFor(x=> course.Title)
+                <ul>
+                    @foreach (var assignment in course.Assignments)
+                    {
+                        <li>@Html.DisplayFor(x=> assignment.Title)</li>
+                    }
+                </ul>
+            }
+            </td>
+        </tr>
+            }
+
+        }
+    </tbody>
+</table>

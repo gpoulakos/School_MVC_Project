@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "StudentsPerCourseAssignmentTable";
+}
+
+<h2>Students Per Course Per Assignment Table</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Course Title</th>
+            <th>Assignment Title</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var student in Model )
+        {
+            <tr>
+
+                <td>@student.Assignment.Title</td>
+              
+
+                    @*@foreach (var assignment in Model.Assignments)
+
+                    {
+                        <p> @assignment.Title</p>
+                    }*@
+
+                
+            </tr>
+        }
+
+        @*@foreach (var item in Model)
+        {
+
+            <tr>
+                <td>@item.Student.FirstName @item.Student.LastName </td>
+                <td>@item.Assignment.Title</td>
+                <td>@item.OralMark</td>
+                <td>@item.TotalMark</td>
+                <td>@item.CodeMark</td>
+
+
+            </tr>
+        }*@
+
+    </tbody>
+</table>

@@ -1,0 +1,39 @@
+﻿@model Assignment2._1.Entities.Course
+@{
+    ViewBag.Title = "CourseDetails";
+}
+
+<h2>Enrolled Students with Assignments</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>Students</th>
+            <th>Assignments</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var course in Model.Students)
+        {
+            <tr>
+
+                <td>@course.FirstName @course.LastName</td>
+                <td>
+                    
+                        @foreach (var assignment in Model.Assignments)
+
+                        {
+                            <p> @assignment.Title</p>
+                        }
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+@Html.ActionLink("Back to Course", "CourseTable", "Courses")
+
